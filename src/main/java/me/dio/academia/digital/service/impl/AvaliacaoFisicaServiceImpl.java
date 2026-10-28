@@ -24,7 +24,7 @@ public class AvaliacaoFisicaServiceImpl implements IAvaliacaoFisicaService {
     @Override
     public AvaliacaoFisica create(AvaliacaoFisicaForm form) {
         AvaliacaoFisica avaliacaoFisica = new AvaliacaoFisica();
-        Aluno aluno = alunoRepository.findById(form.getAlunoId()).get();
+        Aluno aluno = alunoRepository.findById(form.getAlunoId()).orElseThrow(() -> new RuntimeException("Aluno não encontrada"));
         avaliacaoFisica.setAluno(aluno);
         avaliacaoFisica.setPeso(form.getPeso());
         avaliacaoFisica.setPeso(form.getAltura());
@@ -33,21 +33,25 @@ public class AvaliacaoFisicaServiceImpl implements IAvaliacaoFisicaService {
 
     @Override
     public AvaliacaoFisica get(Long id) {
-        return null;
+        return repository.findById(id).orElseThrow(() -> new RuntimeException("Avaliação Física não encontrada"));
     }
 
     @Override
     public List<AvaliacaoFisica> getAll() {
-        return List.of();
+        return repository.findAll();
     }
 
     @Override
-    public AvaliacaoFisica update(Long id, AvaliacaoFisicaUpdateForm formUpdate) {
-        return null;
+    public AvaliacaoFisica update(Long id, AvaliacaoFisicaUpdateForm form) {
+        AvaliacaoFisica avaliacaoFisica = repository.findById(id).orElseThrow(() -> new RuntimeException("Avaliação Física não encontrada"));
+        avaliacaoFisica.setPeso(form.getPeso());
+        avaliacaoFisica.setAltura(form.getAltura());
+        return repository.save(avaliacaoFisica);
     }
 
     @Override
     public void delete(Long id) {
-
+        AvaliacaoFisica avaliacaoFisica = repository.findById(id).orElseThrow(() -> new RuntimeException("Avaliação Física não encontrada"));
+        repository.delete(avaliacaoFisica);
     }
 }
