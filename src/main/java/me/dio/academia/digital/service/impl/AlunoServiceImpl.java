@@ -32,7 +32,7 @@ public class AlunoServiceImpl implements IAlunoService {
 
     @Override
     public Aluno get(Long id) {
-        return repository.findById(id).orElseThrow(() -> new RuntimeException("Aluno não encontrada"));
+        return repository.findById(id).orElseThrow(() -> new RuntimeException("Aluno não encontrado"));
     }
 
     @Override
@@ -47,7 +47,7 @@ public class AlunoServiceImpl implements IAlunoService {
 
     @Override
     public Aluno update(Long id, AlunoUpdateForm form) {
-        Aluno aluno = repository.findById(id).orElseThrow(() -> new RuntimeException("Aluno não encontrada"));
+        Aluno aluno = repository.findById(id).orElseThrow(() -> new RuntimeException("Aluno não encontrado"));
         aluno.setNome(form.getNome());
         aluno.setBairro(form.getBairro());
         aluno.setDataDeNascimento(form.getDataDeNascimento());
@@ -56,13 +56,13 @@ public class AlunoServiceImpl implements IAlunoService {
 
     @Override
     public void delete(Long id) {
-        Aluno aluno = repository.findById(id).orElseThrow(() -> new RuntimeException("Aluno não encontrada"));
+        Aluno aluno = repository.findById(id).orElseThrow(() -> new RuntimeException("Aluno não encontrado"));
         repository.delete(aluno);
     }
 
     @Override
     public List<AvaliacaoFisica> getAllAvaliacaoFisica(Long id) {
-        Aluno aluno = repository.findById(id).orElseThrow(() -> new RuntimeException("Aluno não encontrada"));
+        Aluno aluno = repository.findById(id).orElseThrow(() -> new RuntimeException("Aluno não encontrado"));
         return aluno.getAvaliacoes();
     }
 }

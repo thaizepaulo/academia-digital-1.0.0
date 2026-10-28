@@ -5,6 +5,7 @@ import me.dio.academia.digital.entity.Matricula;
 import me.dio.academia.digital.entity.form.MatriculaForm;
 import me.dio.academia.digital.service.impl.MatriculaServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,6 +17,11 @@ public class MatriculaController {
     @Autowired
     private MatriculaServiceImpl service;
 
+    @GetMapping("/{id}")
+    public ResponseEntity<Matricula> get(@PathVariable Long id) {
+        return ResponseEntity.ok(service.get(id));
+    }
+
     @PostMapping
     public Matricula create(@Valid @RequestBody MatriculaForm form) {
         return service.create(form);
@@ -24,5 +30,11 @@ public class MatriculaController {
     @GetMapping
     public List<Matricula> getAll(@RequestParam(value = "bairro", required = false) String bairro) {
         return service.getAll(bairro);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        service.delete(id);
+        return ResponseEntity.noContent().build();
     }
 }

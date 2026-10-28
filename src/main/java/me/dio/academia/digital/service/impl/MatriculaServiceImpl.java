@@ -23,14 +23,14 @@ public class MatriculaServiceImpl implements IMatriculaService {
     @Override
     public Matricula create(MatriculaForm form) {
         Matricula matricula = new Matricula();
-        Aluno aluno = alunoRepository.findById(form.getAlunoId()).get();
+        Aluno aluno = alunoRepository.findById(form.getAlunoId()).orElseThrow(() -> new RuntimeException("Aluno não encontrado"));
         matricula.setAluno(aluno);
         return repository.save(matricula);
     }
 
     @Override
     public Matricula get(Long id) {
-        return null;
+        return repository.findById(id).orElseThrow(() -> new RuntimeException("Matrícula não encontrada"));
     }
 
     @Override
@@ -44,6 +44,7 @@ public class MatriculaServiceImpl implements IMatriculaService {
 
     @Override
     public void delete(Long id) {
-
+        Matricula matricula = repository.findById(id).orElseThrow(() -> new RuntimeException("Matrícula não encontrada"));
+        repository.delete(matricula);
     }
 }
