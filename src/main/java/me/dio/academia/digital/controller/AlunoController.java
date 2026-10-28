@@ -4,9 +4,10 @@ import jakarta.validation.Valid;
 import me.dio.academia.digital.entity.Aluno;
 import me.dio.academia.digital.entity.AvaliacaoFisica;
 import me.dio.academia.digital.entity.form.AlunoForm;
-import me.dio.academia.digital.service.IAlunoService;
+import me.dio.academia.digital.entity.form.AlunoUpdateForm;
 import me.dio.academia.digital.service.impl.AlunoServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,6 +18,11 @@ public class AlunoController {
 
     @Autowired
     private AlunoServiceImpl service;
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Aluno> get(@PathVariable Long id) {
+        return ResponseEntity.ok(service.get(id));
+    }
 
     @GetMapping
     public List<Aluno> getAll(
@@ -37,4 +43,17 @@ public class AlunoController {
         return service.getAllAvaliacaoFisica(id);
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<Aluno> atualizar(
+            @PathVariable Long id,
+            @Valid @RequestBody AlunoUpdateForm form
+    ) {
+        return ResponseEntity.ok(service.update(id, form));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> excluir(@PathVariable Long id) {
+        service.delete(id);
+        return ResponseEntity.noContent().build();
+    }
 }
