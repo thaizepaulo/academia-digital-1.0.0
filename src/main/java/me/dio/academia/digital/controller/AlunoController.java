@@ -44,7 +44,7 @@ public class AlunoController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Aluno> atualizar(
+    public ResponseEntity<Aluno> update(
             @PathVariable Long id,
             @Valid @RequestBody AlunoUpdateForm form
     ) {
@@ -52,7 +52,7 @@ public class AlunoController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> excluir(@PathVariable Long id) {
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
         service.delete(id);
         return ResponseEntity.noContent().build();
     }
